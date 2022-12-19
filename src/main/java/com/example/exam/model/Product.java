@@ -16,10 +16,10 @@ public class Product {
 
     @ManyToOne
     @EqualsAndHashCode.Exclude
+    @JsonBackReference
     private ProductType type;
 
     @ManyToOne
-    @JsonBackReference
     @EqualsAndHashCode.Exclude
     private ProductOrder order;
 }

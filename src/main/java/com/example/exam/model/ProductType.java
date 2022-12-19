@@ -22,14 +22,14 @@ public class ProductType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // todo unique name
     private String name;
 
     private double price;
     // form grams
     private double weightGram;
 
-    @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
-    @JsonBackReference
+    @OneToMany(mappedBy = "type" ,cascade = CascadeType.ALL)
     private Set<Product> products = new HashSet<>();
 
 }

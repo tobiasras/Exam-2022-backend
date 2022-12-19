@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -23,6 +24,12 @@ public class ProductTypeService implements CrudInterface<ProductType, Long>{
     public Set<ProductType> findAll() {
         return new HashSet<>(productRepository.findAll());
     }
+
+    public List<ProductType> findProductTypesByName(String nameSearch){
+        return productRepository.findProductTypesByNameStartingWith(nameSearch);
+    }
+
+
 
     @Override
     public ProductType save(ProductType object) {
