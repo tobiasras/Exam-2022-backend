@@ -15,7 +15,6 @@ public class Product {
     private Long id;
 
     @ManyToOne
-    @JsonBackReference
     @EqualsAndHashCode.Exclude
     private ProductType type;
 

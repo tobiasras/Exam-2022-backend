@@ -7,6 +7,7 @@ import com.example.exam.repository.ProductRepository;
 import com.example.exam.repository.ProductTypeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.HashSet;
 import java.util.Optional;
