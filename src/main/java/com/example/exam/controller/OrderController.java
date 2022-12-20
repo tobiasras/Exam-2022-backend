@@ -28,8 +28,6 @@ public class OrderController {
     @PostMapping("api/post/create/ProductOrder")
     public ResponseEntity<ProductOrder> createProductOrder(@RequestBody List<ProductType> productsFromOrder, @RequestParam String destination) {
 
-
-
         try {
             ProductOrder order = productOrderService.createOrder(productsFromOrder);
 
@@ -44,6 +42,13 @@ public class OrderController {
     }
 
 
+    @GetMapping("api/get/fetch/by/productOrderID")
+    public ResponseEntity<List<Product>> fetchProductOrderByID(@RequestParam Long orderID) {
+
+        List<Product> withOrderID = productService.getWithOrderID(orderID);
+
+        return new ResponseEntity<>(withOrderID, HttpStatus.OK);
+    }
 
 
 
@@ -51,7 +56,6 @@ public class OrderController {
     public ResponseEntity<Set<ProductOrderObject>> fetchProductOrder() {
 
         Set<ProductOrder> all = productOrderService.findAll();
-
 
         return new ResponseEntity<>(productOrderService.productOrderObjectFromOrders(all), HttpStatus.OK);
     }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.sql.Timestamp;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,12 +22,7 @@ public class Delivery {
 
     private String wareHouse;
 
-
     // 04/02/2022
     private String date;
-
-
-
-
 
 }

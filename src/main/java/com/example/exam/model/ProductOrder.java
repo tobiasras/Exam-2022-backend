@@ -19,7 +19,6 @@ public class ProductOrder {
 
 
     @OneToMany(mappedBy = "order")
-    @JsonBackReference
     private List<Product> products = new ArrayList<>();
 
     @ManyToOne
