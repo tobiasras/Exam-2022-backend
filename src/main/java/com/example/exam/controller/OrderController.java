@@ -1,16 +1,20 @@
 package com.example.exam.controller;
 
-import com.example.exam.model.Destination;
+import com.example.exam.model.Product;
 import com.example.exam.model.ProductOrder;
 import com.example.exam.model.ProductType;
+import com.example.exam.model.forFrontend.ProductObject;
+import com.example.exam.model.forFrontend.ProductOrderObject;
+import com.example.exam.model.forFrontend.ProductTypeObject;
 import com.example.exam.service.ProductOrderService;
 import com.example.exam.service.ProductService;
+import com.example.exam.service.ProductTypeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @CrossOrigin
 @AllArgsConstructor
@@ -18,17 +22,16 @@ import java.util.List;
 public class OrderController {
 
     private ProductOrderService productOrderService;
+    private ProductTypeService productTypeService;
+    private ProductService productService;
 
     @PostMapping("api/post/create/ProductOrder")
     public ResponseEntity<ProductOrder> createProductOrder(@RequestBody List<ProductType> productsFromOrder, @RequestParam String destination) {
 
 
-        Destination destinationModel = new Destination();
-        destinationModel.setAddress(destination);
-
 
         try {
-            ProductOrder order = productOrderService.createOrder(productsFromOrder, destinationModel);
+            ProductOrder order = productOrderService.createOrder(productsFromOrder);
 
             return new ResponseEntity<>(order, HttpStatus.OK);
 
@@ -38,6 +41,19 @@ public class OrderController {
         }
 
 
-
     }
+
+
+
+
+
+    @GetMapping("api/get/fetch/all/ProductOrder")
+    public ResponseEntity<Set<ProductOrderObject>> fetchProductOrder() {
+
+        Set<ProductOrder> all = productOrderService.findAll();
+
+
+        return new ResponseEntity<>(productOrderService.productOrderObjectFromOrders(all), HttpStatus.OK);
+    }
+
 }

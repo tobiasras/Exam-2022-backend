@@ -13,10 +13,6 @@ import java.util.*;
 @Data
 public class ProductOrder {
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "destination_ID", referencedColumnName = "id")
-    private Destination destination;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

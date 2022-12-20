@@ -1,22 +1,24 @@
 package com.example.exam.service;
 
-import com.example.exam.model.Destination;
 import com.example.exam.model.Product;
 import com.example.exam.model.ProductOrder;
 import com.example.exam.model.ProductType;
+import com.example.exam.model.forFrontend.ProductObject;
+import com.example.exam.model.forFrontend.ProductOrderObject;
+import com.example.exam.model.forFrontend.ProductTypeObject;
 import com.example.exam.repository.ProductOrderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.function.UnaryOperator;
 
 @Service
 @AllArgsConstructor
-public class ProductOrderService implements CrudInterface<ProductOrder, Long>{
+public class ProductOrderService implements CrudInterface<ProductOrder, Long> {
 
     private ProductOrderRepository productOrderRepository;
     private ProductService productService;
+
     @Override
     public Set<ProductOrder> findAll() {
         return new HashSet<>(productOrderRepository.findAll());
@@ -43,10 +45,55 @@ public class ProductOrderService implements CrudInterface<ProductOrder, Long>{
         return productOrderRepository.findById(aLong);
     }
 
+    public Set<ProductOrderObject> productOrderObjectFromOrders(Set<ProductOrder> all) {
 
-    public ProductOrder createOrder(List<ProductType> productTypeFromOrder, Destination destination) throws Exception {
+        Set<ProductOrderObject> message = new HashSet<>();
+        // creates for each order
+        for (ProductOrder productOrder : all) {
+            ProductOrderObject order = new ProductOrderObject();
+
+
+            List<ProductObject> listProject = new ArrayList<>();
+            ProductOrder next = productOrder;
+
+            order.setId(next.getId());
+
+
+            List<Product> withOrderID = productService.getWithOrderID(next.getId());
+
+            // for each product in order
+            for (Product product : withOrderID) {
+                ProductObject productObject = new ProductObject();
+
+                Product next1 = product;
+
+                ProductType productType = next1.getType();
+
+                ProductTypeObject productTypeWithProducts = new ProductTypeObject();
+                productTypeWithProducts.setName(productType.getName());
+                productTypeWithProducts.setWeightGram(productType.getWeightGram());
+                productTypeWithProducts.setId(productType.getId());
+                productTypeWithProducts.setPrice(productType.getPrice());
+
+
+                productObject.setProductType(productTypeWithProducts);
+                productObject.setId(next1.getId());
+
+                listProject.add(productObject);
+            }
+
+
+            order.setProducts(listProject);
+            message.add(order);
+        }
+
+
+        return message;
+    }
+
+
+    public ProductOrder createOrder(List<ProductType> productTypeFromOrder) throws Exception {
         ProductOrder productOrder = new ProductOrder();
-        productOrder.setDestination(destination);
 
         ProductOrder productOrderAfterSave = save(productOrder);
 

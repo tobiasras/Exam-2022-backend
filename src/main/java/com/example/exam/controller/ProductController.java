@@ -3,8 +3,7 @@ package com.example.exam.controller;
 
 import com.example.exam.model.Product;
 import com.example.exam.model.ProductType;
-import com.example.exam.model.ProductTypeWithProducts;
-import com.example.exam.repository.ProductRepository;
+import com.example.exam.model.forFrontend.ProductTypeObject;
 import com.example.exam.response.DeleteResponse;
 import com.example.exam.service.ProductService;
 import com.example.exam.service.ProductTypeService;
@@ -37,11 +36,10 @@ public class ProductController {
     }
 
     @GetMapping("api/get/product/byID")
-    public ResponseEntity<ProductTypeWithProducts> findProductByID(@RequestParam Long productID) {
+    public ResponseEntity<ProductTypeObject> findProductByID(@RequestParam Long productID) {
         Optional<ProductType> byId = productTypeService.findById(productID);
 
         ProductType productType = byId.orElse(null);
-
 
         if (byId.isPresent()){
             List<Product> withProductTypeIDWithNoDelivery = productService.getWithProductTypeIDWithNoDelivery(productType);
@@ -50,7 +48,7 @@ public class ProductController {
             productType.setProducts(new HashSet<>(withProductTypeIDWithNoDelivery));
 
 
-            ProductTypeWithProducts productTypeWithProducts = new ProductTypeWithProducts(withProductTypeIDWithNoDelivery);
+            ProductTypeObject productTypeWithProducts = new ProductTypeObject(withProductTypeIDWithNoDelivery);
             productTypeWithProducts.setName(productType.getName());
             productTypeWithProducts.setWeightGram(productType.getWeightGram());
             productTypeWithProducts.setId(productType.getId());
@@ -95,8 +93,8 @@ public class ProductController {
 
 
     @GetMapping("api/get/productInStock/ByName")
-    public ResponseEntity<List<ProductTypeWithProducts>> findProductTypesByNameWithProduct(@RequestParam String search){
-        List<ProductTypeWithProducts> withProduct = new ArrayList();
+    public ResponseEntity<List<ProductTypeObject>> findProductTypesByNameWithProduct(@RequestParam String search){
+        List<ProductTypeObject> withProduct = new ArrayList();
 
         List<ProductType> all = productTypeService.SearchNameProductTypeWithProducts(search);
 
@@ -107,8 +105,7 @@ public class ProductController {
 
             List<Product> withProductTypeIDWithNoDelivery = productService.getWithProductTypeIDWithNoDelivery(productType);
 
-
-            ProductTypeWithProducts productTypeWithProducts = new ProductTypeWithProducts(withProductTypeIDWithNoDelivery);
+            ProductTypeObject productTypeWithProducts = new ProductTypeObject(withProductTypeIDWithNoDelivery);
             productTypeWithProducts.setName(productType.getName());
             productTypeWithProducts.setWeightGram(productType.getWeightGram());
             productTypeWithProducts.setId(productType.getId());

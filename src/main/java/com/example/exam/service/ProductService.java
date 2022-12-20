@@ -1,16 +1,18 @@
 package com.example.exam.service;
 
 import com.example.exam.model.Product;
+import com.example.exam.model.ProductOrder;
 import com.example.exam.model.ProductType;
+import com.example.exam.model.forFrontend.ProductObject;
+import com.example.exam.model.forFrontend.ProductOrderObject;
+import com.example.exam.model.forFrontend.ProductTypeObject;
 import com.example.exam.repository.ProductRepository;
 import com.example.exam.repository.ProductTypeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+
 @Service
 @AllArgsConstructor
 public class ProductService implements CrudInterface<Product, Long>{
@@ -49,6 +51,10 @@ public class ProductService implements CrudInterface<Product, Long>{
     }
 
 
+
+    public List<Product> getWithOrderID(Long orderID){
+        return productRepository.findProductByOrder_Id(orderID);
+    }
 
 
     public void addStock(ProductType productType, int amount) {

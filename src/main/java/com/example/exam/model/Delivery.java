@@ -1,5 +1,6 @@
 package com.example.exam.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,6 +17,7 @@ public class Delivery {
     private Long id;
 
     @OneToMany(mappedBy = "delivery", cascade = CascadeType.ALL)
+    @JsonBackReference
     private Set<ProductOrder> orders = new HashSet<>();
 
     private String wareHouse;

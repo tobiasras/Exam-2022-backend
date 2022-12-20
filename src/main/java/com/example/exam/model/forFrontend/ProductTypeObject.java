@@ -1,20 +1,23 @@
-package com.example.exam.model;
+package com.example.exam.model.forFrontend;
 
+import com.example.exam.model.Product;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.Set;
 
 
-
+@NoArgsConstructor
 @Setter
 @Getter
-public class ProductTypeWithProducts{
+public class ProductTypeObject {
 
-    public ProductTypeWithProducts(List<Product> products){
+    public ProductTypeObject(List<Product> products){
         this.products = products;
     }
+
+
 
     private List<Product> products;
     private Long id;
