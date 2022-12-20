@@ -17,7 +17,7 @@ import java.util.Set;
 public class ProductTypeService implements CrudInterface<ProductType, Long>{
 
     private ProductTypeRepository productTypeRepository;
-
+    private ProductRepository productRepository;
 
     @Override
     public Set<ProductType> findAll() {
