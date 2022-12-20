@@ -30,6 +30,7 @@ public class ProductType {
     private double weightGram;
 
     @OneToMany(mappedBy = "type" ,cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Product> products = new HashSet<>();
 
 }

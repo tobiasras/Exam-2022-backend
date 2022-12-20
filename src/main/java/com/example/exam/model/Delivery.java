@@ -3,6 +3,7 @@ package com.example.exam.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,15 +15,14 @@ public class Delivery {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "destination_ID", referencedColumnName = "id")
-    private Destination destination;
-
-
     @OneToMany(mappedBy = "delivery", cascade = CascadeType.ALL)
     private Set<ProductOrder> orders = new HashSet<>();
 
+    private String wareHouse;
 
+
+    // 04/02/2022
+    private String date;
 
 
 

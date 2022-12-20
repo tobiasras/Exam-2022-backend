@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 @Service
@@ -40,5 +41,26 @@ public class ProductService implements CrudInterface<Product, Long>{
     @Override
     public Optional<Product> findById(Long aLong) {
         return productRepository.findById(aLong);
+    }
+
+
+    public List<Product> getWithProductTypeIDWithNoDelivery(ProductType productType){
+        return productRepository.getProductsByTypeAndOrderIsNull(productType);
+    }
+
+
+
+
+    public void addStock(ProductType productType, int amount) {
+
+        for (int i = 0; i < amount; i++) {
+            Product product = new Product();
+            product.setType(productType);
+
+            productRepository.save(product);
+        }
+
+
+
     }
 }

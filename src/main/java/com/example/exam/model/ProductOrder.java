@@ -2,27 +2,32 @@ package com.example.exam.model;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Data
 public class ProductOrder {
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "destination_ID", referencedColumnName = "id")
+    private Destination destination;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @OneToMany(mappedBy = "order")
-    private Set<Product> products = new HashSet<>();
+    @JsonBackReference
+    private List<Product> products = new ArrayList<>();
 
     @ManyToOne
     @JsonBackReference
     @EqualsAndHashCode.Exclude
     private Delivery delivery;
-
 }

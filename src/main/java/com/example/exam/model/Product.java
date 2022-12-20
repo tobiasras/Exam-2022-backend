@@ -1,6 +1,7 @@
 package com.example.exam.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,13 +15,14 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @ManyToOne
     @EqualsAndHashCode.Exclude
-    @JsonBackReference
     private ProductType type;
 
     @ManyToOne
     @EqualsAndHashCode.Exclude
+    @JsonBackReference
     private ProductOrder order;
 }
 

@@ -9,5 +9,6 @@ public interface ProductTypeRepository extends JpaRepository<ProductType, Long> 
 
     List<ProductType> findProductTypesByNameStartingWith(String name);
 
+    List<ProductType> findProductTypeByProductsIsNotNullAndNameStartingWith(String name);
 
 }
